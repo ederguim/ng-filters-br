@@ -13,6 +13,7 @@
 	<script type="text/javascript" src="../src/brasil/filters/realbrasileiro.js"></script>
 	<script type="text/javascript" src="../src/brasil/filters/placa.js"></script>
 	<script type="text/javascript" src="../src/brasil/filters/cpfCnpj.js"></script>
+	<script type="text/javascript" src="../src/brasil/filters/codigoBarra.js"></script>
 	<script type="text/javascript" src="app.js"></script>
 </head>
 <body ng-controller="MainCtrl">
@@ -30,5 +31,7 @@
 	<p ng-repeat="value in placas">{{value |placa}}</p>
 	<h3>Filtros para CPF e CNPJ</h3>
 	<p ng-repeat="value in cpjCnpjs">{{value |cpfCnpj}}</p>
+	<h3>Filtros Codigo de Barra</h3>
+	<p ng-repeat="value in vm.codigosBarra">{{value | codigoBarra}}</p>
 </body>
 </html>
