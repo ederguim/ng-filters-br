@@ -32,7 +32,7 @@ angular.module('brasil.filters').filter('cnpj', function () {
   };
 });
 // Source: dist/.temp/brasil/filters/cpf.js
-angular.module('brasil.filters', []).filter('cpf', function () {
+angular.module('brasil.filters').filter('cpf', function () {
   return function (input) {
     var str = input + '';
     str = str.replace(/\D/g, '');
@@ -91,3 +91,27 @@ angular.module('brasil.filters').filter('tel', function () {
     return str;
   };
 });
+
+// Source: dist/.temp/brasil/filters/placa.js
+angular.module('brasil.filters').filter('placa', function() {
+    return function (input) {
+        var str = input + '';
+        str = str.replace(/(^[a-zA-Z]{3})(\d{4})/, '$1-$2');
+        return str.toUpperCase();
+    };
+});
+
+// Source: dist/.temp/brasil/filters/cpfCnpj.js
+angular.module('brasil.filters').filter('cpfCnpj', ['$filter', function ($filter) {
+    return function (input) {
+        var str = input + '';
+        if (str.length === 11) {
+            str = $filter('cpf')(str, 'cpf');
+        } else if (str.length === 14) {
+            str = $filter('cnpj')(str, 'cnpj');
+        } else {
+            str;
+        }
+        return str;
+    };
+}]);

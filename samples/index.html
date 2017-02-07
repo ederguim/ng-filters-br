@@ -11,6 +11,8 @@
 	<script type="text/javascript" src="../src/brasil/filters/cep.js"></script>
 	<script type="text/javascript" src="../src/brasil/filters/tel.js"></script>
 	<script type="text/javascript" src="../src/brasil/filters/realbrasileiro.js"></script>
+	<script type="text/javascript" src="../src/brasil/filters/placa.js"></script>
+	<script type="text/javascript" src="../src/brasil/filters/cpfCnpj.js"></script>
 	<script type="text/javascript" src="app.js"></script>
 </head>
 <body ng-controller="MainCtrl">
@@ -24,5 +26,9 @@
  	<p ng-repeat="value in ceps_br">{{value |cep}}</p>
   	<h3>Filtros para Telefones SP e Brasil</h3>
  	<p ng-repeat="value in tels">{{value |tel}}</p>
+	<h3>Filtros para placas de veiculos</h3>
+	<p ng-repeat="value in placas">{{value |placa}}</p>
+	<h3>Filtros para CPF e CNPJ</h3>
+	<p ng-repeat="value in cpjCnpjs">{{value |cpfCnpj}}</p>
 </body>
 </html>
