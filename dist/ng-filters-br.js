@@ -1,6 +1,6 @@
 /**
  * A collection of filters for Brazilian standards
- * @version v1.1.0 - 2014-09-29
+ * @version v1.1.0 - 2017-02-08
  * @author Igor Costa
  * @link https://github.com/igorcosta/ng-filters-br
  * @license Apache License 2.0
@@ -31,6 +31,23 @@ angular.module('brasil.filters').filter('cnpj', function () {
     return str;
   };
 });
+// Source: dist/.temp/brasil/filters/codigoBarra.js
+angular.module('brasil.filters').filter('codigoBarra', function () {
+  return function (input) {
+    var str = input + '';
+    str = str.replace(/^(\d{4})(\d)/, '$1 $2');
+    str = str.replace(/^(\d{4})\s(\d{4})(\d)/, '$1 $2 $3');
+    str = str.replace(/^(\d{4})\s(\d{4})\s(\d{4})(\d)/, '$1 $2 $3 $4');
+    str = str.replace(/^(\d{4})\s(\d{4})\s(\d{4})\s(\d{4})(\d)/, '$1 $2 $3 $4 $5');
+    str = str.replace(/^(\d{4})\s(\d{4})\s(\d{4})\s(\d{4})\s(\d{4})(\d)/, '$1 $2 $3 $4 $5 $6');
+    str = str.replace(/^(\d{4})\s(\d{4})\s(\d{4})\s(\d{4})\s(\d{4})\s(\d{4})(\d)/, '$1 $2 $3 $4 $5 $6 $7');
+    str = str.replace(/^(\d{4})\s(\d{4})\s(\d{4})\s(\d{4})\s(\d{4})\s(\d{4})\s(\d{4})(\d)/, '$1 $2 $3 $4 $5 $6 $7 $8');
+    str = str.replace(/^(\d{4})\s(\d{4})\s(\d{4})\s(\d{4})\s(\d{4})\s(\d{4})\s(\d{4})\s(\d{4})(\d)/, '$1 $2 $3 $4 $5 $6 $7 $8 $9');
+    str = str.replace(/^(\d{4})\s(\d{4})\s(\d{4})\s(\d{4})\s(\d{4})\s(\d{4})\s(\d{4})\s(\d{4})\s(\d{4})(\d)/, '$1 $2 $3 $4 $5 $6 $7 $8 $9 $10');
+    str = str.replace(/^(\d{4})\s(\d{4})\s(\d{4})\s(\d{4})\s(\d{4})\s(\d{4})\s(\d{4})\s(\d{4})\s(\d{4})\s(\d{4})(\d)/, '$1 $2 $3 $4 $5 $6 $7 $8 $9 $10 $11');
+    return str;
+  };
+});
 // Source: dist/.temp/brasil/filters/cpf.js
 angular.module('brasil.filters').filter('cpf', function () {
   return function (input) {
@@ -40,6 +57,31 @@ angular.module('brasil.filters').filter('cpf', function () {
     str = str.replace(/(\d{3})(\d)/, '$1.$2');
     str = str.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
     return str;
+  };
+});
+// Source: dist/.temp/brasil/filters/cpfCnpj.js
+angular.module('brasil.filters').filter('cpfCnpj', [
+  '$filter',
+  function ($filter) {
+    return function (input) {
+      var str = input + '';
+      if (str.length === 11) {
+        str = $filter('cpf')(str, 'cpf');
+      } else if (str.length === 14) {
+        str = $filter('cnpj')(str, 'cnpj');
+      } else {
+        str;
+      }
+      return str;
+    };
+  }
+]);
+// Source: dist/.temp/brasil/filters/placa.js
+angular.module('brasil.filters').filter('placa', function () {
+  return function (input) {
+    var str = input + '';
+    str = str.replace(/(^[a-zA-Z]{3})(\d{4})/, '$1-$2');
+    return str.toUpperCase();
   };
 });
 // Source: dist/.temp/brasil/filters/realbrasileiro.js
@@ -73,7 +115,7 @@ function formatReal(int) {
   }
   return neg ? '-' + tmp : tmp;
 }
-angular.module('brasil.filters').filter('realbrasileiro', function () {
+angular.module('brasil.filters', []).filter('realbrasileiro', function () {
   return function (input) {
     return 'R$ ' + formatReal(input);
   };
@@ -90,46 +132,4 @@ angular.module('brasil.filters').filter('tel', function () {
     }
     return str;
   };
-});
-
-// Source: dist/.temp/brasil/filters/placa.js
-angular.module('brasil.filters').filter('placa', function() {
-    return function (input) {
-        var str = input + '';
-        str = str.replace(/(^[a-zA-Z]{3})(\d{4})/, '$1-$2');
-        return str.toUpperCase();
-    };
-});
-
-// Source: dist/.temp/brasil/filters/cpfCnpj.js
-angular.module('brasil.filters').filter('cpfCnpj', ['$filter', function ($filter) {
-    return function (input) {
-        var str = input + '';
-        if (str.length === 11) {
-            str = $filter('cpf')(str, 'cpf');
-        } else if (str.length === 14) {
-            str = $filter('cnpj')(str, 'cnpj');
-        } else {
-            str;
-        }
-        return str;
-    };
-}]);
-
-// Source: dist/.temp/brasil/filters/codigoBarra.js
-angular.module('brasil.filters').filter('codigoBarra', function() {
-    return function (input) {
-        var str = input + '';
-        str=str.replace(/^(\d{4})(\d)/,'$1 $2');
-        str=str.replace(/^(\d{4})\s(\d{4})(\d)/,'$1 $2 $3')
-        str=str.replace(/^(\d{4})\s(\d{4})\s(\d{4})(\d)/,'$1 $2 $3 $4')
-        str=str.replace(/^(\d{4})\s(\d{4})\s(\d{4})\s(\d{4})(\d)/,'$1 $2 $3 $4 $5')
-        str=str.replace(/^(\d{4})\s(\d{4})\s(\d{4})\s(\d{4})\s(\d{4})(\d)/,'$1 $2 $3 $4 $5 $6')
-        str=str.replace(/^(\d{4})\s(\d{4})\s(\d{4})\s(\d{4})\s(\d{4})\s(\d{4})(\d)/,'$1 $2 $3 $4 $5 $6 $7')
-        str=str.replace(/^(\d{4})\s(\d{4})\s(\d{4})\s(\d{4})\s(\d{4})\s(\d{4})\s(\d{4})(\d)/,'$1 $2 $3 $4 $5 $6 $7 $8')
-        str=str.replace(/^(\d{4})\s(\d{4})\s(\d{4})\s(\d{4})\s(\d{4})\s(\d{4})\s(\d{4})\s(\d{4})(\d)/,'$1 $2 $3 $4 $5 $6 $7 $8 $9')
-        str=str.replace(/^(\d{4})\s(\d{4})\s(\d{4})\s(\d{4})\s(\d{4})\s(\d{4})\s(\d{4})\s(\d{4})\s(\d{4})(\d)/,'$1 $2 $3 $4 $5 $6 $7 $8 $9 $10')
-        str=str.replace(/^(\d{4})\s(\d{4})\s(\d{4})\s(\d{4})\s(\d{4})\s(\d{4})\s(\d{4})\s(\d{4})\s(\d{4})\s(\d{4})(\d)/,'$1 $2 $3 $4 $5 $6 $7 $8 $9 $10 $11')
-        return str;
-    };
 });
